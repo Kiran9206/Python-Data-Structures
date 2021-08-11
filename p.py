@@ -1,4 +1,6 @@
-stack = []
+
+import collections #and also Queue module int that we use for push is put and pop is get and also we want mention a time limit for showing an error
+stack = collections.deque()
 def push():
     if len(stack)==n:
         print("The stack is full!")

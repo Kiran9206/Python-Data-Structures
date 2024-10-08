@@ -284,10 +284,200 @@ def G_subarrays(A):
                 arr1.append(A[index])
             arr.append(arr1)
     return arr
-
+'''
 # A = [1, 2, 3]
 A = [5, 2, 1, 4]
 print(G_subarrays(A))
+'''
+def Subsequences(A):
+    count_a = 0; ans =0
+    for item in A:
+        if item == 'A':
+            count_a +=1
+        elif item == 'G':
+            ans += count_a
+    return ans
+'''
+# A = "ABCGAG"
+A = "GAB"
+print(Subsequences(A))
+'''
+
+def both_sides(A,B):
+    prefixSum = []
+    prefixSum.append(A[0])
+    for index in range(1, len(A)):
+        pre_fix = prefixSum[index-1]
+        Sum = pre_fix + A[index]
+        prefixSum.append(Sum)
+    postfixSum = [0]*len(A)
+    postfixSum[len(A)-1] = A[len(A)-1]
+    for index in range(len(A)-2,-1,-1):
+        post_fix = postfixSum[index+1]
+        Sum = post_fix + A[index]
+        postfixSum[index] = Sum
+    ans = max(prefixSum[B-1], postfixSum[len(A)-B])
+    for index in range(1,B):
+        Sum = prefixSum[index-1] + postfixSum[len(A)-(B-index)]
+        ans = max(ans,Sum)
+    return ans
+'''
+# A = [5, -2, 3 , 1, 2]
+# B = 3
+A = [ 2, 3, -1, 4, 2, 1 ]
+B = 4
+print(both_sides(A,B))
+'''
+
+def leader(A):
+    arr = []
+    ans = -10**9
+    for index in range(len(A)-1,-1,-1):
+        if A[index] > ans:
+            ans = A[index]
+            arr.append(ans)
+    return arr
+'''
+# A = [16, 17, 4, 3, 5, 2]
+A = [5, 4]
+print(leader(A))
+'''
+
+def profit(A):
+    ans = 0
+    if len(A) > 0:
+        MIN = A[0];MAX = max(A)
+        for index in range(len(A)):
+            if MAX == A[index]:
+                return ans
+            elif MIN > A[index]:
+                MIN = A[index]
+                prof = MAX - A[index]
+                ans = max(ans,prof)
+    return ans
+'''
+A = [1, 4, 5, 2, 4,0,10,3]
+print(profit(A))
+'''
+
+def max_subarray(A,B,C):
+    Max = 0
+    for Start in range(A):
+        Sum = 0
+        for end in range(Start,A):
+            Sum += C[end]
+            if Max < Sum and Sum <= B:
+                Max = Sum
+    return Max
+'''
+# A = 5
+# B = 12
+# C = [2, 1, 3, 4, 5]
+
+# A = 3
+# B = 1
+# C = [2, 2, 2]
+
+A= 9
+B= 14
+C= [1,2,4,4,5,5,5,7,5]
+
+print(max_subarray(A,B,C))
+'''
+
+def all_subarray(A):
+    ans = 0
+    for index in range(len(A)):
+        ans += (index+1) * (len(A)-index) * A[index]
+    return ans
+'''
+# A = [1, 2, 3]
+A = [2, 1, 3]
+print(all_subarray(A))
+'''
+
+def subarraySum(A,B,C):
+    Sum = 0
+    for index in range(B):
+        Sum+=A[index]
+    start = 0 ; end = B
+    if Sum == C: return 1
+    while(end < len(A)-1):
+        Sum += A[end] - A[start]
+        start+=1; end+=1
+        if Sum == C:
+            return 1
+    return 0
+'''
+A = [4, 3, 2, 6, 1]
+B = 3
+C = 11
+A = [4, 2, 2, 5, 1]
+B = 4
+C = 6
+print(subarraySum(A,B,C))
+'''
+
+def goodSubarray(A,B):
+    count = 0
+    for start in range(len(A)):
+        Sum = 0
+        for end in range(start,len(A)):
+            Sum+=A[end]; length = end-start+1
+            if (length %2==0 and Sum <B) or (length %2!=0 and Sum >B):
+                count+=1
+    return count
+'''
+A = [1, 2, 3, 4, 5]
+B = 4
+A = [13, 16, 16, 15, 9, 16, 2, 7, 6, 17, 3, 9]
+B = 65
+print(goodSubarray(A,B))
+'''
+
+def least_avg(A,B):
+    Sum =0
+    for index in range(B):
+        Sum+=A[index]
+    least_sum = Sum
+    least_index = 0
+    start = 1; end =B
+    while end<len(A):
+        Sum+=A[end]-A[start-1]
+        start+=1; end+=1
+        if Sum < least_sum:
+            least_sum = Sum
+            least_index = start-1
+    return least_index 
+
+A = [3, 7, 90, 20, 10, 50, 40]
+B = 3
+A = [3, 7, 5, 20, -10, 0, 12]
+B = 2
+print(least_avg(A,B))
+
+
+def counting_subarray(A,B):
+    Count = 0
+    for start in range(len(A)):
+        Sum =0
+        for end in range(start,len(A)):
+            Sum+=A[end]
+            if Sum<B:
+                Count+=1
+    return Count
+'''
+A = [2, 5, 6]
+B = 10
+A = [1, 11, 2, 3, 15]
+B = 10
+print(counting_subarray(A,B))
+'''
+
+
+
+
+
 
 
 
